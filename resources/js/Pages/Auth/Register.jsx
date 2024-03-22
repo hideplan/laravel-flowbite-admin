@@ -1,117 +1,60 @@
-import { useEffect } from 'react';
-import GuestLayout from '@/Layouts/GuestLayout';
-import InputError from '@/Components/InputError';
-import InputLabel from '@/Components/InputLabel';
-import PrimaryButton from '@/Components/PrimaryButton';
-import TextInput from '@/Components/TextInput';
-import { Head, Link, useForm } from '@inertiajs/react';
+import { useEffect } from 'react'
+import GuestLayout from '@/Layouts/GuestLayout'
+import { Head, Link, useForm } from '@inertiajs/react'
+import ToolTips from '@/Components/ToolTips.jsx'
+import InputLabel from '@/Components/InputLabel.jsx'
+import TextInput from '@/Components/TextInput.jsx'
 
-export default function Register() {
+export default function Register () {
     const { data, setData, post, processing, errors, reset } = useForm({
-        name: '',
-        email: '',
-        password: '',
-        password_confirmation: '',
-    });
+        name: '', email: '', password: '', password_confirmation: '',
+    })
 
     useEffect(() => {
         return () => {
-            reset('password', 'password_confirmation');
-        };
-    }, []);
+            reset('password', 'password_confirmation')
+        }
+    }, [])
 
-    const submit = (e) => {
-        e.preventDefault();
+    const onSubmit = (e) => {
+        e.preventDefault()
+        post(route('register'))
+    }
+    const onChange = (e) => {
+        setData(e.target.name, e.target.value)
+    }
 
-        post(route('register'));
-    };
+    return (<GuestLayout>
+        <Head title="Register" />
 
-    return (
-        <GuestLayout>
-            <Head title="Register" />
-
-            <form onSubmit={submit}>
-                <div>
-                    <InputLabel htmlFor="name" value="Name" />
-
-                    <TextInput
-                        id="name"
-                        name="name"
-                        value={data.name}
-                        className="mt-1 block w-full"
-                        autoComplete="name"
-                        isFocused={true}
-                        onChange={(e) => setData('name', e.target.value)}
-                        required
-                    />
-
-                    <InputError message={errors.name} className="mt-2" />
+        <div className="w-full max-w-xl p-6 space-y-8 sm:p-8 bg-white rounded-lg shadow dark:bg-gray-800">
+            <h2 className="text-2xl text-center font-bold text-gray-900 dark:text-white">
+                创建账号 </h2>
+            <form className="mt-8 space-y-6" onSubmit={onSubmit} onChange={onChange}>
+                <div className="mb-6">
+                    <InputLabel htmlFor="email">名字</InputLabel>
+                    <TextInput type="text" name="name" id="name" defaultValue={data.name} error={errors.name} isFocused required />
                 </div>
-
-                <div className="mt-4">
-                    <InputLabel htmlFor="email" value="Email" />
-
-                    <TextInput
-                        id="email"
-                        type="email"
-                        name="email"
-                        value={data.email}
-                        className="mt-1 block w-full"
-                        autoComplete="username"
-                        onChange={(e) => setData('email', e.target.value)}
-                        required
-                    />
-
-                    <InputError message={errors.email} className="mt-2" />
+                <div className="mb-6">
+                    <InputLabel htmlFor="email" help="只接受以@example.com结尾">邮箱</InputLabel>
+                    <TextInput type="email" name="email" id="email" defaultValue={data.email} error={errors.email} placeholder="xxx@example.com" required />
                 </div>
-
-                <div className="mt-4">
-                    <InputLabel htmlFor="password" value="Password" />
-
-                    <TextInput
-                        id="password"
-                        type="password"
-                        name="password"
-                        value={data.password}
-                        className="mt-1 block w-full"
-                        autoComplete="new-password"
-                        onChange={(e) => setData('password', e.target.value)}
-                        required
-                    />
-
-                    <InputError message={errors.password} className="mt-2" />
+                <div className="mb-6">
+                    <InputLabel htmlFor="password" help="至少8个字符">密码</InputLabel>
+                    <TextInput type="password" name="password" id="password" error={errors.password} placeholder="••••••••" required />
                 </div>
-
-                <div className="mt-4">
-                    <InputLabel htmlFor="password_confirmation" value="Confirm Password" />
-
-                    <TextInput
-                        id="password_confirmation"
-                        type="password"
-                        name="password_confirmation"
-                        value={data.password_confirmation}
-                        className="mt-1 block w-full"
-                        autoComplete="new-password"
-                        onChange={(e) => setData('password_confirmation', e.target.value)}
-                        required
-                    />
-
-                    <InputError message={errors.password_confirmation} className="mt-2" />
+                <div className="mb-6">
+                    <InputLabel htmlFor="password_confirmation">确认秘密</InputLabel>
+                    <TextInput type="password_confirmation" name="password_confirmation" id="password_confirmation" placeholder="••••••••" required />
                 </div>
-
-                <div className="flex items-center justify-end mt-4">
-                    <Link
-                        href={route('login')}
-                        className="underline text-sm text-gray-600 hover:text-gray-900 rounded-md focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500"
-                    >
-                        Already registered?
-                    </Link>
-
-                    <PrimaryButton className="ms-4" disabled={processing}>
-                        Register
-                    </PrimaryButton>
+                <button type="submit"
+                        className="w-full px-5 py-3 text-base font-medium text-center text-white bg-blue-700 rounded-lg hover:bg-blue-800 focus:ring-4 focus:ring-blue-300 dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800">
+                    创建
+                </button>
+                <div className="text-sm font-medium text-gray-500 dark:text-gray-400">
+                    <Link href={route('login')} className="text-blue-700 hover:underline dark:text-blue-500">已有账号?</Link>
                 </div>
             </form>
-        </GuestLayout>
-    );
+        </div>
+    </GuestLayout>)
 }
