@@ -1,7 +1,6 @@
 import { useEffect } from 'react'
 import GuestLayout from '@/Layouts/GuestLayout'
 import { Head, Link, useForm } from '@inertiajs/react'
-import ToolTips from '@/Components/ToolTips.jsx'
 import InputLabel from '@/Components/InputLabel.jsx'
 import TextInput from '@/Components/TextInput.jsx'
 
@@ -45,7 +44,7 @@ export default function Register () {
                 </div>
                 <div className="mb-6">
                     <InputLabel htmlFor="password_confirmation">确认秘密</InputLabel>
-                    <TextInput type="password_confirmation" name="password_confirmation" id="password_confirmation" placeholder="••••••••" required />
+                    <TextInput type="password" name="password_confirmation" id="password_confirmation" placeholder="••••••••" required />
                 </div>
                 <button type="submit"
                         className="w-full px-5 py-3 text-base font-medium text-center text-white bg-blue-700 rounded-lg hover:bg-blue-800 focus:ring-4 focus:ring-blue-300 dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800">

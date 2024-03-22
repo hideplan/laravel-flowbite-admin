@@ -1,5 +1,3 @@
-import { useEffect } from 'react'
-import { initFlowbite } from 'flowbite'
 import HelpTooltip from '@/Components/HelpTooltip.jsx'
 
 export default function InputLabel ({ value, className = '', help = '', helpPlacement = 'right', children, ...props }) {
