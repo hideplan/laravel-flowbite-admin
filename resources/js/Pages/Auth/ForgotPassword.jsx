@@ -1,50 +1,35 @@
-import GuestLayout from '@/Layouts/GuestLayout';
-import InputError from '@/Components/InputError';
-import PrimaryButton from '@/Components/PrimaryButton';
-import TextInput from '@/Components/TextInput';
-import { Head, useForm } from '@inertiajs/react';
+import GuestLayout from '@/Layouts/GuestLayout'
+import TextInput from '@/Components/TextInput'
+import { Head, useForm } from '@inertiajs/react'
+import InputLabel from '@/Components/InputLabel.jsx'
+import Button from '@/Components/Button.jsx'
+import FormCard from '@/Pages/Auth/FormCard.jsx'
 
-export default function ForgotPassword({ status }) {
+export default function ForgotPassword ({ status }) {
     const { data, setData, post, processing, errors } = useForm({
         email: '',
-    });
+    })
 
-    const submit = (e) => {
-        e.preventDefault();
+    const onSubmit = (e) => {
+        e.preventDefault()
 
-        post(route('password.email'));
-    };
+        post(route('password.email'))
+    }
+
+    const onChange = e => {
+        setData(e.target.name, e.target.value)
+    }
 
     return (
         <GuestLayout>
             <Head title="Forgot Password" />
-
-            <div className="mb-4 text-sm text-gray-600">
-                Forgot your password? No problem. Just let us know your email address and we will email you a password
-                reset link that will allow you to choose a new one.
-            </div>
-
             {status && <div className="mb-4 font-medium text-sm text-green-600">{status}</div>}
-
-            <form onSubmit={submit}>
-                <TextInput
-                    id="email"
-                    type="email"
-                    name="email"
-                    value={data.email}
-                    className="mt-1 block w-full"
-                    isFocused={true}
-                    onChange={(e) => setData('email', e.target.value)}
-                />
-
-                <InputError message={errors.email} className="mt-2" />
-
-                <div className="flex items-center justify-end mt-4">
-                    <PrimaryButton className="ms-4" disabled={processing}>
-                        Email Password Reset Link
-                    </PrimaryButton>
+            <FormCard title="忘记密码" description="输入您的电子邮件地址，我们将向您发送一个代码以重置您的密码" onSubmit={onSubmit} onChange={onChange}>
+                <div>
+                    <InputLabel htmlFor="email" help="以@example.com结尾">邮箱</InputLabel>
+                    <TextInput type="email" name="email" id="email" defaultValue={data.email} error={errors.email} isFocused required />
                 </div>
-            </form>
-        </GuestLayout>
-    );
+                <Button.PrimaryButton type="submit" disabled={processing} block>重设密码</Button.PrimaryButton>
+            </FormCard>
+        </GuestLayout>)
 }

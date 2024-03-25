@@ -30,6 +30,7 @@ export default function Login ({ status, canResetPassword }) {
     return (
         <GuestLayout>
             <Head title="Log in" />
+            {status && <div className="mb-4 font-medium text-sm text-green-600">{status}</div>}
             <div className="w-full max-w-xl p-6 space-y-8 sm:p-8 bg-white rounded-lg shadow dark:bg-gray-800">
                 <h2 className="text-2xl text-center font-bold text-gray-900 dark:text-white">登陆</h2>
                 <form className="mt-8 space-y-6" onSubmit={onSubmit} onChange={onChange}>
@@ -59,10 +60,11 @@ export default function Login ({ status, canResetPassword }) {
                         )}
                     </div>
                     <button type="submit"
-                            className="w-full px-5 py-3 text-base font-medium text-white text-center bg-blue-700 rounded-lg hover:bg-blue-800 focus:ring-4 focus:ring-blue-300 dark:text-white dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800">
+                            className="w-full px-5 py-3 text-base font-medium text-white text-center bg-blue-700 rounded-lg hover:bg-blue-800 focus:ring-4 focus:ring-blue-300 dark:text-white dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800"
+                            disabled={processing}>
                         登陆
                     </button>
-                    <div className="text-sm font-medium text-gray-500 dark:text-gray-400">
+                    <div className="flex flex-row-reverse text-sm font-medium text-gray-500 dark:text-gray-400">
                         <Link href={route('register')} className="text-blue-700 hover:underline dark:text-blue-500">
                             注册
                         </Link>
